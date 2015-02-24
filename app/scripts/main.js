@@ -19,5 +19,7 @@ require([
     'backbone',
     'routes/router'
 ], function (Backbone, Router) {
+    new Router();
     Backbone.history.start();
+
 });

@@ -20,6 +20,15 @@ require([
     'routes/router'
 ], function (Backbone, Router) {
     new Router();
-    Backbone.history.start();
+    Backbone.history.start({
+        root: '/',
+        pushState: true
+    });
+
+    $(document).delegate('a', 'click', function (evt) {
+        var href = $(this).attr('href');
+        evt.preventDefault();
+        Backbone.history.navigate(href, true);
+    });
 
 });

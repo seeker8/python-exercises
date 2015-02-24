@@ -3,7 +3,7 @@
 define([
     'jquery',
     'backbone'
-], function ($, Backbone, Modernizr, InternalDependency) {
+], function ($, Backbone) {
     'use strict';
 
     var RouterRouter = Backbone.Router.extend({
@@ -17,6 +17,7 @@ define([
                 'modernizr',
                 'internal-dependency'
             ], function (Modernizr, InternalDependency) {
+                console.log('Default');
                 if (Modernizr.history) {
                     console.log('This browser supports push-state routing');
                 } else {
@@ -28,6 +29,7 @@ define([
             });
         },
         about: function (name) {
+            console.log('route '+name);
             $('#content').empty().html('<h1>Hello '+name+'</h1>');
         }
 

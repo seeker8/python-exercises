@@ -1,10 +1,11 @@
+#tested using python 2.7.6
 def converterFromRomanToArabic(romanValue):
-    romans = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
+    romanNumbers = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
     res = 0
     tempRes = 0
     temp = 0
     for value in romanValue:
-        decimal = romans[value]
+        decimal = romanNumbers[value]
         if temp < decimal:
             temp = temp * -1
         tempRes = tempRes + temp

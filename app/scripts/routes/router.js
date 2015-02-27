@@ -6,9 +6,10 @@ define([
 ], function ($, Backbone) {
     'use strict';
 
-    var RouterRouter = Backbone.Router.extend({
+    return Backbone.Router.extend({
         routes: {
             'about/:name': 'about',
+            'tasks': 'task',
             '': 'default'
         },
         default: function () {
@@ -29,11 +30,38 @@ define([
             });
         },
         about: function (name) {
-            console.log('route '+name);
-            $('#content').empty().html('<h1>Hello '+name+'</h1>');
+            console.log('route ' + name);
+            $('#content').empty().html('<h1>Hello ' + name + '</h1>');
+        },
+        task: function () {
+            require([
+                'collections/tasks',
+                'views/task'
+            ], function (TaskCollection, TaskView) {
+                localStorage.clear();
+                var collection = new TaskCollection();
+                collection.create({
+                    title: 'One',
+                    due: '2015-12-12',
+                    done: true
+                });
+                collection.create({
+                    title: 'One',
+                    due: '2015-12-12',
+                    done: true
+                });
+                collection.create({
+                    title: 'One',
+                    due: '2015-12-12',
+                    done: true
+                });
+                var view = new TaskView({
+                    model: collection,
+                    el: '#content'
+                });
+                view.render();
+            });
         }
 
     });
-
-    return RouterRouter;
 });

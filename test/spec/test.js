@@ -1,13 +1,29 @@
-/* global describe, it */
+/*global require*/
+'use strict';
 
-(function () {
-  'use strict';
+require.config({
+    baseUrl: '/scripts',
+    shim: {
+        modernizr: {
+            exports: 'Modernizr'
+        },
+        handlebars: {
+            exports: 'Handlebars'
+        }
+    },
+    paths: {
+        jquery: '../bower_components/jquery/dist/jquery',
+        backbone: '../bower_components/backbone/backbone',
+        underscore: '../bower_components/lodash/dist/lodash',
+        modernizr: '../bower_components/modernizr/modernizr'
+    }
+});
 
-  describe('Give it some context', function () {
-    describe('maybe a bit more context here', function () {
-      it('should run here few assertions', function () {
+var specFolder = '../../spec'
 
-      });
-    });
-  });
-})();
+require([
+     specFolder + 'demo'
+], function (Backbone, Router) {
+    mocha.run();
+});
+

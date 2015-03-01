@@ -11,12 +11,12 @@ require.config({
         }
     },
     paths: {
-        jquery: '../bower_components/jquery/dist/jquery',
-        backbone: '../bower_components/backbone/backbone',
+        jquery: 'vendor/jquery/jquery',
+        backbone: 'vendor/backbone/dist/backbone',
         underscore: '../bower_components/lodash/dist/lodash',
-        modernizr: '../bower_components/modernizr/modernizr',
-        localstorage: '../bower_components/backbone.localstorage/backbone.localStorage',
-        handlebars: '../bower_components/handlebars/handlebars'
+        modernizr: 'vendor/modernizr/modernizr',
+        localstorage: 'vendor/backbone/localStorage/backbone.localStorage',
+        handlebars: 'vendor/handlebars/handlebars'
     }
 });
 

@@ -15,7 +15,7 @@ define([
 
         id: 'tasks',
 
-        className: '',
+        className: 'list-group',
 
         events: {},
 

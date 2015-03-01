@@ -195,14 +195,14 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     /*removeCommentsFromCDATA: true,
-                    // https://github.com/yeoman/grunt-usemin/issues/44
-                    //collapseWhitespace: true,
-                    collapseBooleanAttributes: true,
-                    removeAttributeQuotes: true,
-                    removeRedundantAttributes: true,
-                    useShortDoctype: true,
-                    removeEmptyAttributes: true,
-                    removeOptionalTags: true*/
+                     // https://github.com/yeoman/grunt-usemin/issues/44
+                     //collapseWhitespace: true,
+                     collapseBooleanAttributes: true,
+                     removeAttributeQuotes: true,
+                     removeRedundantAttributes: true,
+                     useShortDoctype: true,
+                     removeEmptyAttributes: true,
+                     removeOptionalTags: true*/
                 },
                 files: [{
                     expand: true,
@@ -256,6 +256,24 @@ module.exports = function (grunt) {
                     ]
                 }
             }
+        },
+        bowercopy: {
+            libs: {
+                options: {
+                    destPrefix: '<%= yeoman.app %>/scripts/vendor'
+                },
+                files: {
+                    'backbone/dist': 'backbone/backbone.js',
+                    'backbone/localStorage': 'backbone.localstorage/backbone.localStorage.js',
+                    'bootstrap/dist/': 'bootstrap/dist/',
+                    'bootstrap/fonts': 'bootstrap/fonts',
+                    'handlebars/': 'handlebars/handlebars.js',
+                    'jquery/': 'jquery/dist/jquery.js',
+                    'modernizr': 'modernizr/modernizr.js',
+                    'require': 'requirejs/require.js',
+                    'underscore': 'underscore/underscore.js'
+                }
+            }
         }
     });
 
@@ -297,14 +315,14 @@ module.exports = function (grunt) {
     grunt.registerTask('test', function (isConnected) {
         isConnected = Boolean(isConnected);
         var testTasks = [
-                'clean:server',
-                'createDefaultTemplate',
-                'handlebars',
-                'connect:test',
-                'mocha',
-            ];
+            'clean:server',
+            'createDefaultTemplate',
+            'handlebars',
+            'connect:test',
+            'mocha',
+        ];
 
-        if(!isConnected) {
+        if (!isConnected) {
             return grunt.task.run(testTasks);
         } else {
             // already connected so not going to connect again, remove the connect:test task

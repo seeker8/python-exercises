@@ -48,7 +48,7 @@ define([
                 collection.create({
                     title: 'One',
                     due: '2015-12-12',
-                    done: true
+                    done: false
                 });
                 collection.create({
                     title: 'One',

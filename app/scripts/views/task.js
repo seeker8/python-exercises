@@ -17,7 +17,13 @@ define([
 
         className: 'list-group',
 
-        events: {},
+        events: {
+            'click .task':'showDesc'
+        },
+
+        showDesc:function(e){
+          $(e.currentTarget).next().toggleClass('hide');
+        },
 
         initialize: function () {
            // this.listenTo(this.model, 'change', this.render);

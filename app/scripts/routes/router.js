@@ -41,19 +41,22 @@ define([
                 localStorage.clear();
                 var collection = new TaskCollection();
                 collection.create({
-                    title: 'One',
-                    due: '2015-12-12',
-                    done: true
+                    title: 'Band practice',
+                    due: '2015-03-12',
+                    done: true,
+                    desc:'This is a short description'
                 });
                 collection.create({
-                    title: 'One',
+                    title: 'Essay sketch',
                     due: '2015-12-12',
-                    done: false
+                    done: false,
+                    desc:'This is a short description'
                 });
                 collection.create({
-                    title: 'One',
+                    title: 'Programming exercises',
                     due: '2015-12-12',
-                    done: true
+                    done: true,
+                    desc:'This is a short description'
                 });
                 var view = new TaskView({
                     model: collection,

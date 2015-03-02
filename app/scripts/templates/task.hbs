@@ -1,6 +1,5 @@
 {{#each tasks}}
 
-    <li class="list-group-item">{{title}} due on {{due}}</li>
+    <li class="list-group-item task">{{title}} due on {{due}}</li>
+    <li class="list-group-item desc hide">{{desc}}</li>
 {{/each}}
-<h4>Completed: {{summary.done}}</h4>
-<h4>Pending: {{summary.pending}}</h4>

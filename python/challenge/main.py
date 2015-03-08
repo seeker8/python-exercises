@@ -20,7 +20,6 @@ class App:
               "*********************************************")
 
     def main(self):
-        self.start()
         user_option = 0
         while user_option != 5:
             self.display_menu()
@@ -41,4 +40,5 @@ class App:
 
 if __name__ == '__main__':
     app = App()
+    app.start()
     app.main()

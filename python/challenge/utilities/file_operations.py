@@ -3,12 +3,13 @@ import xml.dom.minidom as md
 
 
 class FileManager:
-    def parse_file(self):
+    def parse_init_people_file(self):
         """Reads input file and parse each line to a Person object which is inserted in People list"""
         people = dict()
         input_file = open("input.csv", "r", 1)
+        data = input_file.read().splitlines()
 
-        for ln in input_file:
+        for ln in data:
             data = ln.split(',')
             person = Person()
             setattr(person, "id", data[0])
@@ -53,3 +54,26 @@ class FileManager:
         report = open(file_path, mode="w", buffering=1)
         report.write(agenda.toprettyxml(encoding="utf-8"))
         report.close()
+
+
+def get_config():
+    """Reads and parse configurations from the config file"""
+    config_file = open("config_files/config.properties", "r")
+    configurations = config_file.read().splitlines()
+    config = dict()
+    for ln in configurations:
+        key_pairs = ln.split("=")
+        if key_pairs[0] != "database_conn_info":
+            config[key_pairs[0]] = key_pairs[1]
+        else:
+            config[key_pairs[0]] = serialize_db_config(key_pairs[1])
+    return config
+
+
+def serialize_db_config(config):
+    db_config = dict()
+    config = config.split(",")
+    for values in config:
+        key_value = values.split(":")
+        db_config[key_value[0]] = key_value[1]
+    return db_config

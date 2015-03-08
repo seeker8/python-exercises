@@ -3,6 +3,10 @@ from utilities.database_access import DatabaseManager
 from models.Person import Person
 
 class App:
+
+    def __init__(self):
+        self.config = dict()
+
     def display_menu(self):
         print("*********************************************\n"
               "**                                         **\n"

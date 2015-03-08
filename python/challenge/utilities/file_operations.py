@@ -6,9 +6,9 @@ class FileManager:
     def parse_file(self):
         """Reads input file and parse each line to a Person object which is inserted in People list"""
         people = dict()
-        file = open("input.csv", "r", 1)
+        input_file = open("input.csv", "r", 1)
 
-        for ln in file:
+        for ln in input_file:
             data = ln.split(',')
             person = Person()
             setattr(person, "id", data[0])
@@ -17,7 +17,7 @@ class FileManager:
             setattr(person, "phone_number", data[3])
             setattr(person, "birthday", data[4])
             people[getattr(person, "id")] = person
-        file.close()
+        input_file.close()
         return people
 
     def generate_report(self, people):

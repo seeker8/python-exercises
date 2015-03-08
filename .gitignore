@@ -10,3 +10,4 @@ backbone/app/scripts/vendor
 python/challenge/specs.txt
 python/challenge/agenda.xml
 python/.idea
+python/**/.pyc

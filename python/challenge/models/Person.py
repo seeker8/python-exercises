@@ -14,3 +14,6 @@ class Person:
         person_str += 'Phone: ' + str(self.phone_number) + '\n'
         person_str += 'Birthday: ' + str(self.birthday) + '\n'
         return person_str
+
+    def serialize(self):
+        return self.id, self.name, self.age, self.phone_number, self.birthday

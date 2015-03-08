@@ -7,3 +7,6 @@ backbone/.tmp
 backbone/test/bower_components/
 backbone/.idea
 backbone/app/scripts/vendor
+python/challenge/specs.txt
+python/challenge/agenda.xml
+python/.idea

@@ -8,6 +8,7 @@ class App:
         self.config = get_config()
         self.file_manager = FileManager()
         self.db_manager = DatabaseManager()
+        self.options = {"generate_report": 1, "exit": 5}
 
     def display_menu(self):
         print("*********************************************\n"
@@ -25,6 +26,9 @@ class App:
             self.display_menu()
             try:
                 user_option = int(raw_input('>Option: '))
+                if user_option == self.options["generate_report"]:
+                    self.generate_xml_report()
+
             except ValueError:
                 print('Not a valid option')
                 user_option = 0
@@ -34,9 +38,16 @@ class App:
         """Initializes the table PEOPLE reading the input file"""
         people = self.file_manager.parse_init_people_file()
         self.db_manager.start_connection(self.config["database_conn_info"])
-        for index in people:
-            self.db_manager.add_person(people[index])
+        self.db_manager.create_table()
+        for person in people:
+            self.db_manager.add_person(person)
         self.db_manager.stop_connection()
+
+    def generate_xml_report(self):
+        self.db_manager.start_connection(self.config["database_conn_info"])
+        people = self.db_manager.get_people()
+        self.db_manager.stop_connection()
+        self.file_manager.generate_report(people)
 
 if __name__ == '__main__':
     app = App()

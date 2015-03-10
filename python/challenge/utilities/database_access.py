@@ -41,7 +41,7 @@ class DatabaseManager:
 
     def get_people(self):
         people = getattr(self, "cnx").cursor()
-        people.execute(self.retrive_all)
+        people.execute(self.retrieve_all)
         people_list = list()
         for data in people:
             person = Person(data[0], data[1], data[2], data[3], data[4])

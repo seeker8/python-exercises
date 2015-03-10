@@ -34,7 +34,7 @@ class App:
 
     def main(self):
         user_option = 0
-        while user_option != 5:
+        while user_option < 5:
             self.display_menu()
             try:
                 user_option = int(raw_input('>Option: '))

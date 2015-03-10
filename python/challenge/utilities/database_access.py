@@ -9,8 +9,9 @@ class DatabaseManager:
                                  "VALUES (?, ?, ?, ?, ?)")
         self.create_table_people = "CREATE TABLE people(id INTEGER PRIMARY KEY, name TEXT, age INTEGER, phone TEXT," \
                                    " birthday DATE)"
-        self.retrive_all = "SELECT * FROM people"
-        self.update_phone = "UPDATE people SET phone = ? WHERE id = ?"
+        self.retrieve_all = "SELECT * FROM people"
+        self.update_phone_query = "UPDATE people SET phone = ? WHERE id = ?"
+        self.update_name_query =  "UPDATE people SET name = ? WHERE id = ?"
 
     def start_connection(self, config):
         cnx = sqlite3.connect(config)
@@ -46,3 +47,11 @@ class DatabaseManager:
             person = Person(data[0], data[1], data[2], data[3], data[4])
             people_list.append(person)
         return people_list
+
+    def update_phone(self, person_id, phone):
+        cursor = getattr(self, "cnx").cursor()
+        cursor.execute(self.update_phone_query, (phone, person_id))
+
+    def update_name(self, person_id, name):
+        cursor = getattr(self, "cnx").cursor()
+        cursor.execute(self.update_name_query, (name, person_id))

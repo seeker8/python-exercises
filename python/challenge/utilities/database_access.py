@@ -11,7 +11,8 @@ class DatabaseManager:
                                    " birthday DATE)"
         self.retrieve_all = "SELECT * FROM people"
         self.update_phone_query = "UPDATE people SET phone = ? WHERE id = ?"
-        self.update_name_query =  "UPDATE people SET name = ? WHERE id = ?"
+        self.update_name_query = "UPDATE people SET name = ? WHERE id = ?"
+        self.find_person_query = "SELECT * FROM people WHERE id = ?"
 
     def start_connection(self, config):
         cnx = sqlite3.connect(config)
@@ -48,10 +49,15 @@ class DatabaseManager:
             people_list.append(person)
         return people_list
 
+    def find_person(self, id):
+        cursor = getattr(self, "cnx").cursor()
+        cursor.execute(self.find_person_query, str(id))
+        return cursor.fetchall()
+
     def update_phone(self, person_id, phone):
         cursor = getattr(self, "cnx").cursor()
-        cursor.execute(self.update_phone_query, (phone, person_id))
+        cursor.execute(self.update_phone_query, (str(phone), str(person_id)))
 
     def update_name(self, person_id, name):
         cursor = getattr(self, "cnx").cursor()
-        cursor.execute(self.update_name_query, (name, person_id))
+        cursor.execute(self.update_name_query, (str(name), str(person_id)))

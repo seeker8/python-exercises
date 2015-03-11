@@ -3,7 +3,8 @@ import sqlite3
 
 
 class DatabaseManager:
-    def __init__(self):
+    def __init__(self, database):
+        self.database = database
         self.add_person_query = ("INSERT INTO people "
                                  "(id, name, age, phone, birthday) "
                                  "VALUES (?, ?, ?, ?, ?)")
@@ -23,41 +24,61 @@ class DatabaseManager:
 
     def create_table(self):
         try:
+            self.start_connection(self.database)
             cursor = getattr(self, "cnx")
             cursor.execute(self.create_table_people)
             getattr(self, "cnx").commit()
+            self.stop_connection()
         except sqlite3.OperationalError as e:
             if e.message.__contains__('already exists'):
                 print "The table already exists"
 
     def add_person(self, person):
         try:
+            self.start_connection(self.database)
             cursor = getattr(self, "cnx").cursor()
             person_data = person.serialize()
             cursor.execute(self.add_person_query, person_data)
             getattr(self, "cnx").commit()
+            self.stop_connection()
         except sqlite3.IntegrityError:
             print "This record already exists in the database {0} - {1}".format(getattr(person, "id"),
                                                                                 getattr(person, "name"))
 
     def get_people(self):
+        self.start_connection(self.database)
         people = getattr(self, "cnx").cursor()
         people.execute(self.retrieve_all)
         people_list = list()
+        self.stop_connection()
         for data in people:
             person = Person(data[0], data[1], data[2], data[3], data[4])
             people_list.append(person)
         return people_list
 
-    def find_person(self, id):
+    def find_person(self, person_id):
+        self.start_connection(self.database)
         cursor = getattr(self, "cnx").cursor()
-        cursor.execute(self.find_person_query, str(id))
+        cursor.execute(self.find_person_query, str(person_id))
+        self.stop_connection()
         return cursor.fetchall()
 
+    def populate_table(self, people):
+        self.start_connection(self.database)
+        for person in people:
+            cursor = getattr(self, "cnx").cursor()
+            cursor.execute(self.add_person_query, person.serialize())
+            getattr(self, "cnx").commit()
+        self.stop_connection()
+
     def update_phone(self, person_id, phone):
+        self.start_connection(self.database)
         cursor = getattr(self, "cnx").cursor()
         cursor.execute(self.update_phone_query, (str(phone), str(person_id)))
+        self.stop_connection()
 
     def update_name(self, person_id, name):
+        self.start_connection(self.database)
         cursor = getattr(self, "cnx").cursor()
         cursor.execute(self.update_name_query, (str(name), str(person_id)))
+        self.stop_connection()

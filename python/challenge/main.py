@@ -8,8 +8,8 @@ class App:
     def __init__(self):
         self.config = get_config()
         self.file_manager = FileManager()
-        self.db_manager = DatabaseManager()
-        self.options = {"generate_report": 1, "update_person": 2, "exit": 5}
+        self.db_manager = DatabaseManager(self.config["database_conn_info"])
+        self.options = {"generate_report": 1, "update_person": 2, "exit": 3}
 
     def display_menu(self):
         print("*********************************************\n"
@@ -36,7 +36,7 @@ class App:
 
     def main(self):
         user_option = 0
-        while user_option < 5:
+        while user_option < 3:
             self.display_menu()
             try:
                 user_option = int(raw_input('>Option: '))
@@ -56,24 +56,17 @@ class App:
     def start(self):
         """Initializes the table PEOPLE reading the input file"""
         people = self.file_manager.parse_init_people_file()
-        self.db_manager.start_connection(self.config["database_conn_info"])
         self.db_manager.create_table()
-        for person in people:
-            self.db_manager.add_person(person)
-        self.db_manager.stop_connection()
+        self.db_manager.populate_table(people)
 
     def generate_xml_report(self):
-        self.db_manager.start_connection(self.config["database_conn_info"])
         people = self.db_manager.get_people()
-        self.db_manager.stop_connection()
         self.file_manager.generate_report(people)
 
     def update_person_details(self, user_id):
         print '\n'*2
         option = 0
-        self.db_manager.start_connection(self.config["database_conn_info"])
         count = self.db_manager.find_person(user_id)
-        self.db_manager.stop_connection()
         if count.__len__() == 0:
             print('The id does not exist. Please choose other.')
             return

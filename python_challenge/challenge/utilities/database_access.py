@@ -50,35 +50,42 @@ class DatabaseManager:
         people = getattr(self, "cnx").cursor()
         people.execute(self.retrieve_all)
         people_list = list()
-        self.stop_connection()
         for data in people:
             person = Person(data[0], data[1], data[2], data[3], data[4])
             people_list.append(person)
+        self.stop_connection()
         return people_list
 
     def find_person(self, person_id):
         self.start_connection(self.database)
         cursor = getattr(self, "cnx").cursor()
         cursor.execute(self.find_person_query, str(person_id))
+        person = cursor.fetchall()
         self.stop_connection()
-        return cursor.fetchall()
+        return person
 
     def populate_table(self, people):
         self.start_connection(self.database)
         for person in people:
-            cursor = getattr(self, "cnx").cursor()
-            cursor.execute(self.add_person_query, person.serialize())
-            getattr(self, "cnx").commit()
+            try:
+                cursor = getattr(self, "cnx").cursor()
+                cursor.execute(self.add_person_query, person.serialize())
+                getattr(self, "cnx").commit()
+            except sqlite3.IntegrityError:
+                print "This record already exists in the database {0} - {1}".format(getattr(person, "id"),
+                                                                                getattr(person, "name"))
         self.stop_connection()
 
     def update_phone(self, person_id, phone):
         self.start_connection(self.database)
         cursor = getattr(self, "cnx").cursor()
         cursor.execute(self.update_phone_query, (str(phone), str(person_id)))
+        getattr(self, "cnx").commit()
         self.stop_connection()
 
     def update_name(self, person_id, name):
         self.start_connection(self.database)
         cursor = getattr(self, "cnx").cursor()
         cursor.execute(self.update_name_query, (str(name), str(person_id)))
+        getattr(self, "cnx").commit()
         self.stop_connection()

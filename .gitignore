@@ -1,13 +1,5 @@
-backbone/node_modules
-backbone/dist
-backbone/test/temp
-backbone/.sass-cache
-backbone/app/bower_components
-backbone/.tmp
-backbone/test/bower_components/
-backbone/.idea
-backbone/app/scripts/vendor
-python/challenge/specs.txt
-python/challenge/agenda.xml
-python/.idea
+python_challenge/challenge/specs.txt
+python_challenge/challenge/agenda.xml
+python_challenge/.idea
+python_challenge/challenge/agenda.db
 *.pyc

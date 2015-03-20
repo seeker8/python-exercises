@@ -10,6 +10,7 @@ class App:
         self.file_manager = FileManager()
         self.db_manager = DatabaseManager(self.config["database_conn_info"])
         self.options = {"generate_report": 1, "update_person": 2, "exit": 3}
+        self.update_options = {"updtae_name": 1, "update_phone": 2, "cancel": 3}
 
     def display_menu(self):
         print("*********************************************\n"
@@ -67,6 +68,7 @@ class App:
         print '\n'*2
         option = 0
         count = self.db_manager.find_person(user_id)
+        print("Current Person information {}", count)
         if count.__len__() == 0:
             print('The id does not exist. Please choose other.')
             return
@@ -77,10 +79,22 @@ class App:
                 option = int(raw_input('>Option: '))
                 if option > 3 or option < 0:
                     raise ValueError
+                if option == self.update_options["updtae_name"]:
+                    new_name = raw_input("Enter new name: ")
+                    self.update_name(user_id, new_name)
+                if option == self.update_options["update_phone"]:
+                    new_phone = raw_input("Enter new phone number: ")
+                    self.update_phone(user_id, new_phone)
             except ValueError:
                 print('Not a valid option')
                 option = 0
         print 'update section'
+
+    def update_name(self, person_id, new_name):
+        self.db_manager.update_name(person_id, new_name)
+
+    def update_phone(self, person_id, new_phone):
+        self.db_manager.update_phone(person_id, new_phone)
 
 if __name__ == '__main__':
     app = App()

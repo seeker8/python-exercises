@@ -17,4 +17,4 @@ if __name__ == '__main__':
     print converterFromRomanToArabic('VIII')
     print converterFromRomanToArabic('XX')
     print converterFromRomanToArabic('MCMLXLIX')
-    print converterFromRomanToArabic('XIX')
+    print converterFromRomanToArabic('XIX')    
